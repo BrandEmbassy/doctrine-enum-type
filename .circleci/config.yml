@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: spittet/php-mysql
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run: cp .circleci/config.neon tests/config.neon
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "composer.json" }}
+          - v1-dependencies-
+
+      - run: composer install -n --prefer-dist
+
+      - save_cache:
+          paths:
+            - ./vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
+
+      - run: composer phpstan
+      - run: composer test
