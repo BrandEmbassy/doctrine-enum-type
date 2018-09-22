@@ -1,0 +1,41 @@
+{
+  "name": "brandembassy/doctrine-enum-type",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/BrandEmbassy/doctrine-enum-type/issues"
+  },
+  "autoload": {
+    "psr-4": {
+      "BrandEmbassy\\Doctrine\\EnumType\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "BrandEmbassy\\Doctrine\\EnumType\\": "tests"
+    }
+  },
+  "require": {
+    "php": ">=7.1",
+    "doctrine/orm": "^2.6"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master",
+    "phpstan/phpstan": "^0.10.0",
+    "phpstan/phpstan-strict-rules": "^0.10.0",
+    "mockery/mockery": "^1.0",
+    "marc-mabe/php-enum": "^3.0",
+    "consistence/consistence": "^1.0",
+    "myclabs/php-enum": "^1.6",
+    "nette/neon": "^2.4",
+    "nette/tester": "^2.0"
+  },
+  "suggest": {
+    "marc-mabe/php-enum": "For marc-mabe/php-enum enums support",
+    "consistence/consistence": "For consistence/consistence enums support",
+    "myclabs/php-enum": "For myclabs/php-enum enums support"
+  },
+  "scripts": {
+    "test": "vendor/bin/tester -c tests/php.ini -j 1 tests",
+    "phpstan": "vendor/bin/phpstan analyse src tests -l max -c phpstan.neon"
+  }
+}
