@@ -2,7 +2,12 @@ version: 2
 jobs:
   build:
     docker:
-      - image: spittet/php-mysql
+      - image: brandembassy/php:7.2-fpm-noxdebug
+      - image: mysql
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+          MYSQL_ROOT_PASSWORD: "root"
+          MYSQL_DATABASE: "doctrine-enum-type-test"
 
     working_directory: ~/repo
 
@@ -24,4 +29,4 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
 
       - run: composer phpstan
-      - run: composer test
+      - run: sleep 10 && composer test
