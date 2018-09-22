@@ -19,7 +19,7 @@ final class EnumTypeTest extends TestCase
 
     public function testShouldSaveAndLoadEnumValue(): void
     {
-        $user = new User('Foo Honza', Gender::get(Gender::MALE));
+        $user = new User('Bar Honza', Gender::get(Gender::MALE));
 
         $this->databaseManager->persist($user);
         $this->databaseManager->flush();
