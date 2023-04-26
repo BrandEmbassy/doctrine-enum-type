@@ -3,6 +3,6 @@ parameters:
         driver: pdo_mysql
         host: 127.0.0.1
         port: 3306
-        user: foo
-        password: bar
-        dbname: foo-database
+        user: root
+        password: 123
+        dbname: doctrine_enum_type_db

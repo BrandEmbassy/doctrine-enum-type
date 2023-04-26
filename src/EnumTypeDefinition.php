@@ -2,18 +2,15 @@
 
 namespace BrandEmbassy\Doctrine\EnumType;
 
-final class EnumTypeDefinition
+/**
+ * @final
+ */
+class EnumTypeDefinition
 {
+    private string $name;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $className;
 
-    /**
-     * @var string
-     */
-    private $className;
 
     public function __construct(string $name, string $className)
     {
@@ -21,14 +18,15 @@ final class EnumTypeDefinition
         $this->className = $className;
     }
 
+
     public function getName(): string
     {
         return $this->name;
     }
 
+
     public function getClassName(): string
     {
         return $this->className;
     }
-
 }

@@ -12,10 +12,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 final class EnumTypeTest extends TestCase
 {
 
-    /**
-     * @var DatabaseManager
-     */
-    private $databaseManager;
+    private DatabaseManager $databaseManager;
 
     public function testShouldSaveAndLoadEnumValue(): void
     {
@@ -49,6 +46,9 @@ final class EnumTypeTest extends TestCase
         Assert::same($carColor, $foundCar->getColor());
     }
 
+    /**
+     * @return mixed[]
+     */
     public function carColorProvider(): array
     {
         return [

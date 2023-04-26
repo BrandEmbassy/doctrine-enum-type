@@ -1,2 +1,11 @@
 includes:
-	- vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/brandembassy/coding-standard/default-phpstan.neon
+    - phpstan-baseline.neon
+
+parameters:
+    level: 8
+    paths:
+        - src
+        - tests
+
+    tmpDir: temp/phpstan
