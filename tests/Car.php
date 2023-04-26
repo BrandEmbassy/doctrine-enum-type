@@ -7,29 +7,28 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="car")
+ *
+ * @final
  */
-final class Car
+class Car
 {
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
-     * @var int
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string")
-     * @var string
      */
-    private $brand;
+    private string $brand;
 
     /**
      * @ORM\Column(type="enumColor", nullable=true)
-     * @var Color|null
      */
-    private $color;
+    private ?Color $color;
+
 
     public function __construct(string $brand, ?Color $color = null)
     {
@@ -37,29 +36,33 @@ final class Car
         $this->color = $color;
     }
 
+
     public function getId(): int
     {
         return $this->id;
     }
+
 
     public function getBrand(): string
     {
         return $this->brand;
     }
 
+
     public function setBrand(string $brand): void
     {
         $this->brand = $brand;
     }
+
 
     public function getColor(): ?Color
     {
         return $this->color;
     }
 
+
     public function setColor(?Color $color): void
     {
         $this->color = $color;
     }
-
 }

@@ -6,10 +6,13 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Tools\SchemaTool;
+use function array_map;
 
-final class DatabaseManager
+/**
+ * @final
+ */
+class DatabaseManager
 {
-
     private EntityManager $entityManager;
 
     /**
@@ -18,6 +21,7 @@ final class DatabaseManager
     private array $entities;
 
     private EnumTypesManager $enumTypesManager;
+
 
     /**
      * @param string[] $entities
@@ -29,6 +33,7 @@ final class DatabaseManager
         $this->enumTypesManager = $enumTypesManager;
     }
 
+
     /**
      * @param object $entity
      */
@@ -37,15 +42,18 @@ final class DatabaseManager
         $this->entityManager->persist($entity);
     }
 
+
     public function flush(): void
     {
         $this->entityManager->flush();
     }
 
+
     public function getRepository(string $entityName): EntityRepository
     {
         return $this->entityManager->getRepository($entityName);
     }
+
 
     public function createSchema(): void
     {
@@ -55,23 +63,22 @@ final class DatabaseManager
         $tool->createSchema($this->getEntitiesMetadata());
     }
 
+
     public function dropSchema(): void
     {
         $tool = new SchemaTool($this->entityManager);
         $tool->dropSchema($this->getEntitiesMetadata());
     }
 
+
     /**
      * @return ClassMetadata[]
      */
     private function getEntitiesMetadata(): array
     {
-        return \array_map(
-            function (string $entityClass): ClassMetadata {
-                return $this->entityManager->getClassMetadata($entityClass);
-            },
-            $this->entities
+        return array_map(
+            fn(string $entityClass): ClassMetadata => $this->entityManager->getClassMetadata($entityClass),
+            $this->entities,
         );
     }
-
 }

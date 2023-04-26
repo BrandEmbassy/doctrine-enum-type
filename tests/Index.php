@@ -7,8 +7,9 @@ use MabeEnum\Enum;
 /**
  * @final
  */
-class Gender extends Enum
+class Index extends Enum
 {
-    public const MALE = 'male';
-    public const FEMALE = 'female';
+    public const ZERO = 0;
+    public const ONE = 1;
+    public const TWO = 2;
 }
