@@ -9,6 +9,7 @@ return static function (ECSConfig $ecsConfig) use ($defaultEcsConfigurationSetup
 
     $ecsConfig->paths([
         'src',
+        'tests',
         'ecs.php',
     ]);
 

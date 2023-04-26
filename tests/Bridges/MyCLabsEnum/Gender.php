@@ -6,11 +6,10 @@ use MyCLabs\Enum\Enum;
 
 /**
  * @extends Enum<string>
+ * @final
  */
-final class Gender extends Enum
+class Gender extends Enum
 {
-
     public const MALE = 'male';
     public const FEMALE = 'female';
-
 }

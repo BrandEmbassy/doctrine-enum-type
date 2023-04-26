@@ -7,29 +7,34 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
+ *
+ * @final
  */
-final class User
+class User
 {
-
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
-     * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string")
      * @var string
+     *
+     * @ORM\Column(type="string")
      */
     private $name;
 
     /**
-     * @ORM\Column(type="enumGender")
      * @var Gender
+     *
+     * @ORM\Column(type="enumGender")
      */
     private $gender;
+
 
     public function __construct(string $name, Gender $gender)
     {
@@ -37,29 +42,33 @@ final class User
         $this->gender = $gender;
     }
 
+
     public function getId(): int
     {
         return $this->id;
     }
+
 
     public function getName(): string
     {
         return $this->name;
     }
 
+
     public function setName(string $name): void
     {
         $this->name = $name;
     }
+
 
     public function getGender(): Gender
     {
         return $this->gender;
     }
 
+
     public function setGender(Gender $gender): void
     {
         $this->gender = $gender;
     }
-
 }

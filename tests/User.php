@@ -7,59 +7,80 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
+ *
+ * @final
  */
-final class User
+class User
 {
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
-     * @var int
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string")
-     * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="enumGender")
-     * @var Gender
      */
-    private $gender;
+    private Gender $gender;
 
-    public function __construct(string $name, Gender $gender)
+    /**
+     * @ORM\Column(type="enumIndex", nullable=true)
+     */
+    private ?Index $numericalIndex;
+
+
+    public function __construct(string $name, Gender $gender, ?Index $numericalIndex = null)
     {
         $this->name = $name;
         $this->gender = $gender;
+        $this->numericalIndex = $numericalIndex;
     }
+
 
     public function getId(): int
     {
         return $this->id;
     }
 
+
     public function getName(): string
     {
         return $this->name;
     }
+
 
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
+
     public function getGender(): Gender
     {
         return $this->gender;
     }
+
 
     public function setGender(Gender $gender): void
     {
         $this->gender = $gender;
     }
 
+
+    public function getNumericalIndex(): ?Index
+    {
+        return $this->numericalIndex;
+    }
+
+
+    public function setNumericalIndex(?Index $numericalIndex): void
+    {
+        $this->numericalIndex = $numericalIndex;
+    }
 }

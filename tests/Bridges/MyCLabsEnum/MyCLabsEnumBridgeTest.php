@@ -7,16 +7,21 @@ use BrandEmbassy\Doctrine\EnumType\DatabaseManagerBuilder;
 use Tester\Assert;
 use Tester\Environment;
 use Tester\TestCase;
+use function assert;
+use function getenv;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
-final class MyCLabsEnumBridgeTest extends TestCase
+/**
+ * @final
+ */
+class MyCLabsEnumBridgeTest extends TestCase
 {
-
     /**
      * @var DatabaseManager
      */
     private $databaseManager;
+
 
     public function testShouldWorkWithMyCLabsEnumImplementation(): void
     {
@@ -28,11 +33,12 @@ final class MyCLabsEnumBridgeTest extends TestCase
         $repository = $this->databaseManager->getRepository(User::class);
         $foundUser = $repository->find($user->getId());
 
-        \assert($foundUser instanceof User);
+        assert($foundUser instanceof User);
         Assert::same(Gender::MALE, $foundUser->getGender()->getValue());
     }
 
-    public function setUp(): void
+
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -44,15 +50,15 @@ final class MyCLabsEnumBridgeTest extends TestCase
         $this->databaseManager->createSchema();
     }
 
-    public function tearDown(): void
+
+    protected function tearDown(): void
     {
         parent::tearDown();
 
         $this->databaseManager->dropSchema();
     }
-
 }
 
-if (\getenv(Environment::RUNNER) !== false) {
+if (getenv(Environment::RUNNER) !== false) {
     (new MyCLabsEnumBridgeTest())->run();
 }

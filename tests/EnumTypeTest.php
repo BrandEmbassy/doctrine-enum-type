@@ -6,13 +6,18 @@ use BrandEmbassy\Doctrine\EnumType\Bridges\MarcMabeEnum\MarcMabeEnumBridge;
 use Tester\Assert;
 use Tester\Environment;
 use Tester\TestCase;
+use function assert;
+use function getenv;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-final class EnumTypeTest extends TestCase
+/**
+ * @final
+ */
+class EnumTypeTest extends TestCase
 {
-
     private DatabaseManager $databaseManager;
+
 
     public function testShouldSaveAndLoadEnumValue(): void
     {
@@ -24,13 +29,13 @@ final class EnumTypeTest extends TestCase
         $repository = $this->databaseManager->getRepository(User::class);
         $foundUser = $repository->find($user->getId());
 
-        \assert($foundUser instanceof User);
+        assert($foundUser instanceof User);
         Assert::same(Gender::get(Gender::MALE), $foundUser->getGender());
     }
 
+
     /**
      * @dataProvider carColorProvider
-     * @param Color|null $carColor
      */
     public function testShouldWorkWithNullableEnumValue(?Color $carColor): void
     {
@@ -42,9 +47,10 @@ final class EnumTypeTest extends TestCase
         $repository = $this->databaseManager->getRepository(Car::class);
         $foundCar = $repository->find($car->getId());
 
-        \assert($foundCar instanceof Car);
+        assert($foundCar instanceof Car);
         Assert::same($carColor, $foundCar->getColor());
     }
+
 
     /**
      * @return mixed[]
@@ -57,7 +63,8 @@ final class EnumTypeTest extends TestCase
         ];
     }
 
-    public function setUp(): void
+
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -66,20 +73,21 @@ final class EnumTypeTest extends TestCase
         $databaseManagerBuilder->addEntity(Car::class);
         $databaseManagerBuilder->addEnumTypeDefinition('enumGender', Gender::class);
         $databaseManagerBuilder->addEnumTypeDefinition('enumColor', Color::class);
+        $databaseManagerBuilder->addEnumTypeDefinition('enumIndex', Index::class);
         $this->databaseManager = $databaseManagerBuilder->build();
 
         $this->databaseManager->createSchema();
     }
 
-    public function tearDown(): void
+
+    protected function tearDown(): void
     {
         parent::tearDown();
 
         $this->databaseManager->dropSchema();
     }
-
 }
 
-if (\getenv(Environment::RUNNER) !== false) {
+if (getenv(Environment::RUNNER) !== false) {
     (new EnumTypeTest())->run();
 }
