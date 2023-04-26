@@ -1,3 +1,4 @@
 vendor
+temp
 composer.lock
 tests/config.neon

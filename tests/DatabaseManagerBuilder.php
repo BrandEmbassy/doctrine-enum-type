@@ -45,6 +45,9 @@ final class DatabaseManagerBuilder
         return new DatabaseManager($entityManager, $this->entities, $this->enumTypesManager);
     }
 
+    /**
+     * @return mixed[]
+     */
     private function getDatabaseConfiguration(): array
     {
         $configFilePath = __DIR__ . '/' . self::CONFIG_FILE;

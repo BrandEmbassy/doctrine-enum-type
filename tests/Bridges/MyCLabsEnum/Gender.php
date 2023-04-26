@@ -4,6 +4,9 @@ namespace BrandEmbassy\Doctrine\EnumType\Bridges\MyCLabsEnum;
 
 use MyCLabs\Enum\Enum;
 
+/**
+ * @extends Enum<string>
+ */
 final class Gender extends Enum
 {
 

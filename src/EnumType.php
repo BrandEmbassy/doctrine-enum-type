@@ -6,24 +6,20 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use InvalidArgumentException;
 use LogicException;
+use function assert;
+use function sprintf;
 
-final class EnumType extends Type
+/**
+ * @final
+ */
+class EnumType extends Type
 {
+    private string $name = '';
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $className = '';
 
-    /**
-     * @var string
-     */
-    private $className;
+    private EnumImplementation $enumImplementation;
 
-    /**
-     * @var EnumImplementation
-     */
-    private $enumImplementation;
 
     public static function setupFor(
         EnumTypeDefinition $enumTypeDefinition,
@@ -31,9 +27,10 @@ final class EnumType extends Type
     ): void {
         Type::addType($enumTypeDefinition->getName(), self::class);
         $createdType = Type::getType($enumTypeDefinition->getName());
-        \assert($createdType instanceof self);
+        assert($createdType instanceof self);
         $createdType->setEnumTypeDefinition($enumTypeDefinition, $enumImplementation);
     }
+
 
     public function setEnumTypeDefinition(
         EnumTypeDefinition $enumTypeDefinition,
@@ -44,14 +41,19 @@ final class EnumType extends Type
         $this->enumImplementation = $enumImplementation;
     }
 
+
+    /**
+     * @param mixed[] $fieldDeclaration
+     */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return 'VARCHAR(255)';
     }
 
+
     /**
      * @param mixed $value
-     * @param AbstractPlatform $platform
+     *
      * @return mixed|null
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
@@ -65,9 +67,10 @@ final class EnumType extends Type
         return $this->enumImplementation->convertDatabaseValueToEnum($this->className, $value);
     }
 
+
     /**
      * @param mixed $value
-     * @param AbstractPlatform $platform
+     *
      * @return mixed
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
@@ -79,11 +82,12 @@ final class EnumType extends Type
         $this->validateEnumTypeIsSet();
 
         if (!($value instanceof $this->className)) {
-            throw new InvalidArgumentException(\sprintf('Value %s is not type of %s.', $value, $this->className));
+            throw new InvalidArgumentException(sprintf('Value %s is not type of %s.', $value, $this->className));
         }
 
         return $this->enumImplementation->convertEnumToDatabaseValue($value);
     }
+
 
     public function getName(): string
     {
@@ -92,16 +96,17 @@ final class EnumType extends Type
         return $this->name;
     }
 
+
     public function requiresSQLCommentHint(AbstractPlatform $platform): bool
     {
         return true;
     }
 
+
     private function validateEnumTypeIsSet(): void
     {
-        if ($this->name === null || $this->className === null) {
+        if ($this->name === '' || $this->className === '') {
             throw new LogicException('Please call \'setEnumTypeDefinition\' method first.');
         }
     }
-
 }

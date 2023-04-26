@@ -2,33 +2,25 @@
 
 namespace BrandEmbassy\Doctrine\EnumType;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Tools\SchemaTool;
 
 final class DatabaseManager
 {
 
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
+    private EntityManager $entityManager;
 
     /**
      * @var string[]
      */
-    private $entities;
+    private array $entities;
+
+    private EnumTypesManager $enumTypesManager;
 
     /**
-     * @var EnumTypesManager
-     */
-    private $enumTypesManager;
-
-    /**
-     * @param EntityManager $entityManager
      * @param string[] $entities
-     * @param EnumTypesManager $enumTypesManager
      */
     public function __construct(EntityManager $entityManager, array $entities, EnumTypesManager $enumTypesManager)
     {
@@ -50,7 +42,7 @@ final class DatabaseManager
         $this->entityManager->flush();
     }
 
-    public function getRepository(string $entityName): ObjectRepository
+    public function getRepository(string $entityName): EntityRepository
     {
         return $this->entityManager->getRepository($entityName);
     }

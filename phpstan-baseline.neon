@@ -1,0 +1,56 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\Bridges\\\\MarcMabeEnum\\\\MarcMabeEnumBridgeTest\\:\\:testShouldWorkWithMarcMabeEnumImplementation\\(\\) seems like a test method, but the class is not a PHPUnit\\\\Framework\\\\TestCase\\.$#"
+			count: 1
+			path: tests/Bridges/MarcMabeEnum/MarcMabeEnumBridgeTest.php
+
+		-
+			message: "#^Method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\Bridges\\\\MyCLabsEnum\\\\MyCLabsEnumBridgeTest\\:\\:testShouldWorkWithMyCLabsEnumImplementation\\(\\) seems like a test method, but the class is not a PHPUnit\\\\Framework\\\\TestCase\\.$#"
+			count: 1
+			path: tests/Bridges/MyCLabsEnum/MyCLabsEnumBridgeTest.php
+
+		-
+			message: "#^Property BrandEmbassy\\\\Doctrine\\\\EnumType\\\\Bridges\\\\MyCLabsEnum\\\\User\\:\\:\\$id is never written, only read\\.$#"
+			count: 1
+			path: tests/Bridges/MyCLabsEnum/User.php
+
+		-
+			message: "#^Property BrandEmbassy\\\\Doctrine\\\\EnumType\\\\Car\\:\\:\\$id is never written, only read\\.$#"
+			count: 1
+			path: tests/Car.php
+
+		-
+			message: "#^Method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\DatabaseManager\\:\\:getEntitiesMetadata\\(\\) return type with generic class Doctrine\\\\ORM\\\\Mapping\\\\ClassMetadata does not specify its types\\: T$#"
+			count: 1
+			path: tests/DatabaseManager.php
+
+		-
+			message: "#^Method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\DatabaseManager\\:\\:getRepository\\(\\) return type with generic class Doctrine\\\\ORM\\\\EntityRepository does not specify its types\\: T$#"
+			count: 1
+			path: tests/DatabaseManager.php
+
+		-
+			message: "#^Parameter \\#1 \\$entityName of method Doctrine\\\\ORM\\\\EntityManager\\:\\:getRepository\\(\\) expects class\\-string\\<object\\>, string given\\.$#"
+			count: 1
+			path: tests/DatabaseManager.php
+
+		-
+			message: "#^Unable to resolve the template type T in call to method Doctrine\\\\ORM\\\\EntityManager\\:\\:getRepository\\(\\)$#"
+			count: 1
+			path: tests/DatabaseManager.php
+
+		-
+			message: "#^Method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\EnumTypeTest\\:\\:testShouldSaveAndLoadEnumValue\\(\\) seems like a test method, but the class is not a PHPUnit\\\\Framework\\\\TestCase\\.$#"
+			count: 1
+			path: tests/EnumTypeTest.php
+
+		-
+			message: "#^Method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\EnumTypeTest\\:\\:testShouldWorkWithNullableEnumValue\\(\\) seems like a test method, but the class is not a PHPUnit\\\\Framework\\\\TestCase\\.$#"
+			count: 1
+			path: tests/EnumTypeTest.php
+
+		-
+			message: "#^Property BrandEmbassy\\\\Doctrine\\\\EnumType\\\\User\\:\\:\\$id is never written, only read\\.$#"
+			count: 1
+			path: tests/User.php

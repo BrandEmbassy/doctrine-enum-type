@@ -15,27 +15,36 @@
     }
   },
   "require": {
-    "php": ">=7.1",
-    "doctrine/orm": "^2.6"
+    "php": "^7.4 || >=8.1",
+    "doctrine/orm": "^2.14.3"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-master",
-    "phpstan/phpstan": "^0.10.0",
-    "phpstan/phpstan-strict-rules": "^0.10.0",
+    "roave/security-advisories": "dev-latest",
     "mockery/mockery": "^1.0",
-    "marc-mabe/php-enum": "^3.0",
-    "consistence/consistence": "^1.0",
+    "marc-mabe/php-enum": "^3.2 || ^4.4",
     "myclabs/php-enum": "^1.6",
     "nette/neon": "^2.4",
-    "nette/tester": "^2.0"
+    "nette/tester": "2.4.3",
+    "brandembassy/coding-standard": "10.0.0-beta",
+    "symfony/cache": "^5.4 || ^6.2",
+    "doctrine/annotations": "^2.0"
   },
   "suggest": {
     "marc-mabe/php-enum": "For marc-mabe/php-enum enums support",
-    "consistence/consistence": "For consistence/consistence enums support",
     "myclabs/php-enum": "For myclabs/php-enum enums support"
   },
   "scripts": {
     "test": "vendor/bin/tester -c tests/php.ini -j 1 tests",
-    "phpstan": "vendor/bin/phpstan analyse src tests -l max -c phpstan.neon"
+    "check-cs": "vendor/bin/ecs check --ansi",
+    "fix-cs": "vendor/bin/ecs check --fix --ansi",
+    "phpstan": "php -dxdebug.mode=off vendor/bin/phpstan analyse --memory-limit=-1",
+    "phpstan-generate-baseline": "php -dxdebug.mode=off vendor/bin/phpstan analyse --memory-limit=-1 --generate-baseline",
+    "phpunit-cc": "./vendor/bin/phpunit tests"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "lock": false
   }
 }

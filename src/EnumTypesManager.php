@@ -4,43 +4,45 @@ namespace BrandEmbassy\Doctrine\EnumType;
 
 use Doctrine\DBAL\Types\Type;
 use InvalidArgumentException;
+use function is_subclass_of;
+use function sprintf;
 
-final class EnumTypesManager
+/**
+ * @final
+ */
+class EnumTypesManager
 {
-
     /**
      * @var EnumTypeDefinition[]
      */
-    private $enumTypeDefinitions = [];
+    private array $enumTypeDefinitions = [];
 
-    /**
-     * @var EnumImplementation
-     */
-    private $enumImplementation;
+    private EnumImplementation $enumImplementation;
+
 
     public function __construct(EnumImplementation $enumImplementation)
     {
         $this->enumImplementation = $enumImplementation;
     }
 
+
     /**
-     * @param string $name
-     * @param string $className
      * @throws InvalidArgumentException when given class is not subclass of base enum class
      */
     public function addEnumTypeDefinition(string $name, string $className): void
     {
-        if (!\is_subclass_of($className, $this->enumImplementation->getBaseEnumClassName())) {
+        if (!is_subclass_of($className, $this->enumImplementation->getBaseEnumClassName())) {
             throw new InvalidArgumentException(
-                \sprintf(
+                sprintf(
                     'Enum type class must be subclass of base enum class \'%s\'',
-                    $this->enumImplementation->getBaseEnumClassName()
-                )
+                    $this->enumImplementation->getBaseEnumClassName(),
+                ),
             );
         }
 
         $this->enumTypeDefinitions[] = new EnumTypeDefinition($name, $className);
     }
+
 
     /**
      * @return EnumTypeDefinition[]
@@ -50,6 +52,7 @@ final class EnumTypesManager
         return $this->enumTypeDefinitions;
     }
 
+
     public function initializeEnumTypes(): void
     {
         foreach ($this->enumTypeDefinitions as $enumTypeDefinition) {
@@ -58,5 +61,4 @@ final class EnumTypesManager
             }
         }
     }
-
 }
