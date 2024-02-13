@@ -1,17 +1,16 @@
 <?php declare(strict_types = 1);
 
-namespace BrandEmbassy\Doctrine\EnumType\Bridges\MarcMabeEnum;
+namespace BrandEmbassy\Doctrine\EnumType\Bridges\Enum;
 
 use BrandEmbassy\Doctrine\EnumType\DatabaseManager;
 use BrandEmbassy\Doctrine\EnumType\DatabaseManagerBuilder;
-use MabeEnum\Enum;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
-class MarcMabeEnumBridgeTest extends TestCase
+class EnumBridgeTest extends TestCase
 {
     /**
-     * @var DatabaseManager<Enum>
+     * @var DatabaseManager<object>
      */
     private DatabaseManager $databaseManager;
 
@@ -20,7 +19,7 @@ class MarcMabeEnumBridgeTest extends TestCase
     {
         parent::setUp();
 
-        $databaseManagerBuilder = new DatabaseManagerBuilder(new MarcMabeEnumBridge());
+        $databaseManagerBuilder = new DatabaseManagerBuilder(new EnumBridge());
         $databaseManagerBuilder->addEntity(User::class);
         $databaseManagerBuilder->addEnumTypeDefinition('enumGender', Gender::class);
         $databaseManagerBuilder->addEnumTypeDefinition('enumIndex', Index::class);
@@ -40,7 +39,7 @@ class MarcMabeEnumBridgeTest extends TestCase
 
     public function testShouldWorkWithMarcMabeEnumImplementation(): void
     {
-        $user = new User('Foo Honza', Gender::get(Gender::MALE), Index::get(Index::TWO));
+        $user = new User('Foo Honza', Gender::MALE, Index::TWO);
 
         $this->databaseManager->persist($user);
         $this->databaseManager->flush();
@@ -49,7 +48,7 @@ class MarcMabeEnumBridgeTest extends TestCase
         $foundUser = $repository->find($user->getId());
 
         Assert::assertInstanceOf(User::class, $foundUser);
-        Assert::assertEquals(Gender::get(Gender::MALE), $foundUser->getGender());
-        Assert::assertEquals(Index::get(Index::TWO), $foundUser->getNumericalIndex());
+        Assert::assertEquals(Gender::MALE, $foundUser->getGender());
+        Assert::assertEquals(Index::TWO, $foundUser->getNumericalIndex());
     }
 }

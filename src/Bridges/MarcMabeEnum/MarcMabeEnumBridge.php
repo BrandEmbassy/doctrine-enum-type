@@ -3,67 +3,47 @@
 namespace BrandEmbassy\Doctrine\EnumType\Bridges\MarcMabeEnum;
 
 use BrandEmbassy\Doctrine\EnumType\EnumImplementation;
+use InvalidArgumentException;
 use MabeEnum\Enum;
 use function assert;
-use function filter_var;
 use function is_array;
 use function is_subclass_of;
-use const FILTER_VALIDATE_BOOLEAN;
-use const FILTER_VALIDATE_FLOAT;
-use const FILTER_VALIDATE_INT;
-use const PHP_VERSION_ID;
+use function sprintf;
 
 /**
  * @final
+ * @implements EnumImplementation<Enum>
  */
 class MarcMabeEnumBridge implements EnumImplementation
 {
-    public function getBaseEnumClassName(): string
+    public function isClassSupported(string $className): bool
     {
-        return Enum::class;
+        return is_subclass_of($className, Enum::class);
     }
 
 
-    /**
-     * @param bool|float|int|string|null $databaseValue
-     *
-     * @return mixed enum
-     */
-    public function convertDatabaseValueToEnum(string $enumClassName, $databaseValue)
+    public function assertClassIsSupported(string $className): void
+    {
+        if (!$this->isClassSupported($className)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    "Enum type class must be subclass of base enum class '%s'",
+                    Enum::class,
+                ),
+            );
+        }
+    }
+
+
+    public function convertDatabaseValueToEnum(string $enumClassName, bool|float|int|string|null $databaseValue): Enum
     {
         assert(is_subclass_of($enumClassName, Enum::class));
-
-        // In PHP 7.4, the $databaseValue is always a string, but in 8.1, it might be int / float, etc..
-        if (PHP_VERSION_ID < 80000) {
-            if ($enumClassName::has($databaseValue)) {
-                return $enumClassName::get($databaseValue);
-            }
-
-            if ($databaseValue === '' && $enumClassName::has(null)) {
-                return $enumClassName::get(null);
-            }
-
-            $databaseValueAsFloat = filter_var($databaseValue, FILTER_VALIDATE_FLOAT);
-            if ($databaseValueAsFloat !== false && $enumClassName::has($databaseValueAsFloat)) {
-                return $enumClassName::get($databaseValueAsFloat);
-            }
-
-            $databaseValueAsInt = filter_var($databaseValue, FILTER_VALIDATE_INT);
-            if ($databaseValueAsInt !== false && $enumClassName::has($databaseValueAsInt)) {
-                return $enumClassName::get($databaseValueAsInt);
-            }
-
-            return $enumClassName::get(filter_var($databaseValue, FILTER_VALIDATE_BOOLEAN));
-        }
 
         return $enumClassName::get($databaseValue);
     }
 
 
-    /**
-     * @param mixed $enum
-     */
-    public function convertEnumToDatabaseValue($enum): string
+    public function convertEnumToDatabaseValue(mixed $enum): string
     {
         assert($enum instanceof Enum);
 

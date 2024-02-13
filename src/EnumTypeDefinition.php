@@ -9,9 +9,15 @@ class EnumTypeDefinition
 {
     private string $name;
 
+    /**
+     * @var class-string<object>
+     */
     private string $className;
 
 
+    /**
+     * @param class-string<object> $className
+     */
     public function __construct(string $name, string $className)
     {
         $this->name = $name;
@@ -25,6 +31,9 @@ class EnumTypeDefinition
     }
 
 
+    /**
+     * @return class-string<object>
+     */
     public function getClassName(): string
     {
         return $this->className;

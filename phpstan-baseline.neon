@@ -1,12 +1,62 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\Bridges\\\\MarcMabeEnum\\\\MarcMabeEnumBridgeTest\\:\\:testShouldWorkWithMarcMabeEnumImplementation\\(\\) seems like a test method, but the class is not a PHPUnit\\\\Framework\\\\TestCase\\.$#"
+			message: "#^Call to an undefined static method T of object\\:\\:from\\(\\)\\.$#"
+			count: 1
+			path: src/Bridges/Enum/EnumBridge.php
+
+		-
+			message: "#^Call to function assert\\(\\) with true will always evaluate to true\\.$#"
+			count: 1
+			path: src/Bridges/MarcMabeEnum/MarcMabeEnumBridge.php
+
+		-
+			message: "#^Call to function is_subclass_of\\(\\) with class\\-string\\<T of MabeEnum\\\\Enum\\> and 'MabeEnum\\\\\\\\Enum' will always evaluate to true\\.$#"
+			count: 1
+			path: src/Bridges/MarcMabeEnum/MarcMabeEnumBridge.php
+
+		-
+			message: "#^Call to function assert\\(\\) with true will always evaluate to true\\.$#"
+			count: 1
+			path: src/Bridges/MyCLabsEnum/MyCLabsEnumBridge.php
+
+		-
+			message: "#^Call to function is_subclass_of\\(\\) with class\\-string\\<T of MyCLabs\\\\Enum\\\\Enum\\<bool\\|float\\|int\\|string\\>\\> and 'MyCLabs\\\\\\\\Enum\\\\\\\\Enum' will always evaluate to true\\.$#"
+			count: 1
+			path: src/Bridges/MyCLabsEnum/MyCLabsEnumBridge.php
+
+		-
+			message: "#^Property BrandEmbassy\\\\Doctrine\\\\EnumType\\\\Bridges\\\\Enum\\\\User\\:\\:\\$id is never written, only read\\.$#"
+			count: 1
+			path: tests/Bridges/Enum/User.php
+
+		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with 'BrandEmbassy\\\\\\\\Doctrine\\\\\\\\EnumType\\\\\\\\Bridges\\\\\\\\MarcMabeEnum\\\\\\\\User' and MabeEnum\\\\Enum\\|null will always evaluate to false\\.$#"
 			count: 1
 			path: tests/Bridges/MarcMabeEnum/MarcMabeEnumBridgeTest.php
 
 		-
-			message: "#^Method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\Bridges\\\\MyCLabsEnum\\\\MyCLabsEnumBridgeTest\\:\\:testShouldWorkWithMyCLabsEnumImplementation\\(\\) seems like a test method, but the class is not a PHPUnit\\\\Framework\\\\TestCase\\.$#"
+			message: "#^Parameter \\#1 \\$entityName of method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\DatabaseManager\\<MabeEnum\\\\Enum\\>\\:\\:getRepository\\(\\) expects class\\-string\\<MabeEnum\\\\Enum\\>, string given\\.$#"
+			count: 1
+			path: tests/Bridges/MarcMabeEnum/MarcMabeEnumBridgeTest.php
+
+		-
+			message: "#^Class BrandEmbassy\\\\Doctrine\\\\EnumType\\\\Bridges\\\\MarcMabeEnum\\\\User has an uninitialized readonly property \\$id\\. Assign it in the constructor\\.$#"
+			count: 1
+			path: tests/Bridges/MarcMabeEnum/User.php
+
+		-
+			message: "#^Property BrandEmbassy\\\\Doctrine\\\\EnumType\\\\Bridges\\\\MarcMabeEnum\\\\User\\:\\:\\$id is never written, only read\\.$#"
+			count: 1
+			path: tests/Bridges/MarcMabeEnum/User.php
+
+		-
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with 'BrandEmbassy\\\\\\\\Doctrine\\\\\\\\EnumType\\\\\\\\Bridges\\\\\\\\MyCLabsEnum\\\\\\\\User' and MyCLabs\\\\Enum\\\\Enum\\<bool\\|float\\|int\\|string\\>\\|null will always evaluate to false\\.$#"
+			count: 1
+			path: tests/Bridges/MyCLabsEnum/MyCLabsEnumBridgeTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$entityName of method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\DatabaseManager\\<MyCLabs\\\\Enum\\\\Enum\\<bool\\|float\\|int\\|string\\>\\>\\:\\:getRepository\\(\\) expects class\\-string\\<MyCLabs\\\\Enum\\\\Enum\\<bool\\|float\\|int\\|string\\>\\>, 'BrandEmbassy\\\\\\\\Doctrine\\\\\\\\EnumType\\\\\\\\Bridges\\\\\\\\MyCLabsEnum\\\\\\\\User' given\\.$#"
 			count: 1
 			path: tests/Bridges/MyCLabsEnum/MyCLabsEnumBridgeTest.php
 
@@ -21,36 +71,16 @@ parameters:
 			path: tests/Car.php
 
 		-
-			message: "#^Method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\DatabaseManager\\:\\:getEntitiesMetadata\\(\\) return type with generic class Doctrine\\\\ORM\\\\Mapping\\\\ClassMetadata does not specify its types\\: T$#"
-			count: 1
-			path: tests/DatabaseManager.php
-
-		-
-			message: "#^Method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\DatabaseManager\\:\\:getRepository\\(\\) return type with generic class Doctrine\\\\ORM\\\\EntityRepository does not specify its types\\: T$#"
-			count: 1
-			path: tests/DatabaseManager.php
-
-		-
-			message: "#^Parameter \\#1 \\$entityName of method Doctrine\\\\ORM\\\\EntityManager\\:\\:getRepository\\(\\) expects class\\-string\\<object\\>, string given\\.$#"
-			count: 1
-			path: tests/DatabaseManager.php
-
-		-
-			message: "#^Unable to resolve the template type T in call to method Doctrine\\\\ORM\\\\EntityManager\\:\\:getRepository\\(\\)$#"
-			count: 1
-			path: tests/DatabaseManager.php
-
-		-
-			message: "#^Method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\EnumTypeTest\\:\\:testShouldSaveAndLoadEnumValue\\(\\) seems like a test method, but the class is not a PHPUnit\\\\Framework\\\\TestCase\\.$#"
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with 'BrandEmbassy\\\\\\\\Doctrine\\\\\\\\EnumType\\\\\\\\Bridges\\\\\\\\MarcMabeEnum\\\\\\\\User' and MabeEnum\\\\Enum\\|null will always evaluate to false\\.$#"
 			count: 1
 			path: tests/EnumTypeTest.php
 
 		-
-			message: "#^Method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\EnumTypeTest\\:\\:testShouldWorkWithNullableEnumValue\\(\\) seems like a test method, but the class is not a PHPUnit\\\\Framework\\\\TestCase\\.$#"
+			message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with 'BrandEmbassy\\\\\\\\Doctrine\\\\\\\\EnumType\\\\\\\\Car' and MabeEnum\\\\Enum\\|null will always evaluate to false\\.$#"
 			count: 1
 			path: tests/EnumTypeTest.php
 
 		-
-			message: "#^Property BrandEmbassy\\\\Doctrine\\\\EnumType\\\\User\\:\\:\\$id is never written, only read\\.$#"
-			count: 1
-			path: tests/User.php
+			message: "#^Parameter \\#1 \\$entityName of method BrandEmbassy\\\\Doctrine\\\\EnumType\\\\DatabaseManager\\<MabeEnum\\\\Enum\\>\\:\\:getRepository\\(\\) expects class\\-string\\<MabeEnum\\\\Enum\\>, string given\\.$#"
+			count: 2
+			path: tests/EnumTypeTest.php

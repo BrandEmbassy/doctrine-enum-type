@@ -1,0 +1,15 @@
+name: Sonar Qube on push to master
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  phpunit-with-sonar-qube:
+    uses: BrandEmbassy/github-actions/.github/workflows/php-phpunit-with-sonar-qube.yml@master
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    with:
+      COPY_CONFIGURATION_FILES: tests/config.neon.example:tests/config.neon
+      SERVICES: mysql

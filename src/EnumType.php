@@ -6,6 +6,8 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use InvalidArgumentException;
 use LogicException;
+use MabeEnum\Enum as MabeEnum;
+use MyCLabs\Enum\Enum as MyCLabsEnum;
 use function assert;
 use function sprintf;
 
@@ -16,11 +18,20 @@ class EnumType extends Type
 {
     private string $name = '';
 
-    private string $className = '';
+    /**
+     * @var class-string<object>
+     */
+    private string $className;
 
+    /**
+     * @var EnumImplementation<MyCLabsEnum<bool|float|int|string>|MabeEnum|object>
+     */
     private EnumImplementation $enumImplementation;
 
 
+    /**
+     * @param EnumImplementation<MyCLabsEnum<bool|float|int|string>|MabeEnum|object> $enumImplementation
+     */
     public static function setupFor(
         EnumTypeDefinition $enumTypeDefinition,
         EnumImplementation $enumImplementation
@@ -32,6 +43,9 @@ class EnumType extends Type
     }
 
 
+    /**
+     * @param EnumImplementation<MyCLabsEnum<bool|float|int|string>|MabeEnum|object> $enumImplementation
+     */
     public function setEnumTypeDefinition(
         EnumTypeDefinition $enumTypeDefinition,
         EnumImplementation $enumImplementation
@@ -70,10 +84,8 @@ class EnumType extends Type
 
     /**
      * @param mixed $value
-     *
-     * @return mixed
      */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): bool|float|int|string|null
     {
         if ($value === null) {
             return null;
@@ -106,7 +118,7 @@ class EnumType extends Type
     private function validateEnumTypeIsSet(): void
     {
         if ($this->name === '' || $this->className === '') {
-            throw new LogicException('Please call \'setEnumTypeDefinition\' method first.');
+            throw new LogicException("Please call 'setEnumTypeDefinition' method first.");
         }
     }
 }

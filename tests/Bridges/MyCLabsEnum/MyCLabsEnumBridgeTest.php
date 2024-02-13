@@ -4,23 +4,16 @@ namespace BrandEmbassy\Doctrine\EnumType\Bridges\MyCLabsEnum;
 
 use BrandEmbassy\Doctrine\EnumType\DatabaseManager;
 use BrandEmbassy\Doctrine\EnumType\DatabaseManagerBuilder;
-use Tester\Assert;
-use Tester\Environment;
-use Tester\TestCase;
-use function assert;
-use function getenv;
+use MyCLabs\Enum\Enum;
+use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../../vendor/autoload.php';
-
-/**
- * @final
- */
 class MyCLabsEnumBridgeTest extends TestCase
 {
     /**
-     * @var DatabaseManager
+     * @var DatabaseManager<Enum<bool|float|int|string>>
      */
-    private $databaseManager;
+    private DatabaseManager $databaseManager;
 
 
     public function testShouldWorkWithMyCLabsEnumImplementation(): void
@@ -33,8 +26,8 @@ class MyCLabsEnumBridgeTest extends TestCase
         $repository = $this->databaseManager->getRepository(User::class);
         $foundUser = $repository->find($user->getId());
 
-        assert($foundUser instanceof User);
-        Assert::same(Gender::MALE, $foundUser->getGender()->getValue());
+        Assert::assertInstanceOf(User::class, $foundUser);
+        Assert::assertEquals(Gender::MALE, $foundUser->getGender()->getValue());
     }
 
 
@@ -53,12 +46,8 @@ class MyCLabsEnumBridgeTest extends TestCase
 
     protected function tearDown(): void
     {
-        parent::tearDown();
-
         $this->databaseManager->dropSchema();
-    }
-}
 
-if (getenv(Environment::RUNNER) !== false) {
-    (new MyCLabsEnumBridgeTest())->run();
+        parent::tearDown();
+    }
 }

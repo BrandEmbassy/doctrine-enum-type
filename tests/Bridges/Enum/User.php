@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace BrandEmbassy\Doctrine\EnumType\Bridges\MyCLabsEnum;
+namespace BrandEmbassy\Doctrine\EnumType\Bridges\Enum;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,7 +28,11 @@ class User
         /**
          * @ORM\Column(type="enumGender")
          */
-        private Gender $gender
+        private Gender $gender,
+        /**
+         * @ORM\Column(type="enumIndex", nullable=true)
+         */
+        private ?Index $numericalIndex = null
     ) {
     }
 
@@ -60,5 +64,17 @@ class User
     public function setGender(Gender $gender): void
     {
         $this->gender = $gender;
+    }
+
+
+    public function getNumericalIndex(): ?Index
+    {
+        return $this->numericalIndex;
+    }
+
+
+    public function setNumericalIndex(?Index $numericalIndex): void
+    {
+        $this->numericalIndex = $numericalIndex;
     }
 }

@@ -2,20 +2,19 @@
 
 namespace BrandEmbassy\Doctrine\EnumType;
 
+use BrandEmbassy\Doctrine\EnumType\Bridges\MarcMabeEnum\Gender;
+use BrandEmbassy\Doctrine\EnumType\Bridges\MarcMabeEnum\Index;
 use BrandEmbassy\Doctrine\EnumType\Bridges\MarcMabeEnum\MarcMabeEnumBridge;
-use Tester\Assert;
-use Tester\Environment;
-use Tester\TestCase;
-use function assert;
-use function getenv;
+use BrandEmbassy\Doctrine\EnumType\Bridges\MarcMabeEnum\User;
+use MabeEnum\Enum;
+use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
-/**
- * @final
- */
 class EnumTypeTest extends TestCase
 {
+    /**
+     * @var DatabaseManager<Enum>
+     */
     private DatabaseManager $databaseManager;
 
 
@@ -29,17 +28,18 @@ class EnumTypeTest extends TestCase
         $repository = $this->databaseManager->getRepository(User::class);
         $foundUser = $repository->find($user->getId());
 
-        assert($foundUser instanceof User);
-        Assert::same(Gender::get(Gender::MALE), $foundUser->getGender());
+        Assert::assertInstanceOf(User::class, $foundUser);
+        Assert::assertEquals(Gender::get(Gender::MALE), $foundUser->getGender());
     }
 
 
     /**
      * @dataProvider carColorProvider
      */
-    public function testShouldWorkWithNullableEnumValue(?Color $carColor): void
+    public function testShouldWorkWithNullableEnumValue(?string $carColor): void
     {
-        $car = new Car('Skoda', $carColor);
+        $carColorEnum = $carColor === null ? null : Color::get($carColor);
+        $car = new Car('Skoda', $carColorEnum);
 
         $this->databaseManager->persist($car);
         $this->databaseManager->flush();
@@ -47,18 +47,18 @@ class EnumTypeTest extends TestCase
         $repository = $this->databaseManager->getRepository(Car::class);
         $foundCar = $repository->find($car->getId());
 
-        assert($foundCar instanceof Car);
-        Assert::same($carColor, $foundCar->getColor());
+        Assert::assertInstanceOf(Car::class, $foundCar);
+        Assert::assertEquals($carColorEnum, $foundCar->getColor());
     }
 
 
     /**
      * @return mixed[]
      */
-    public function carColorProvider(): array
+    public static function carColorProvider(): array
     {
         return [
-            [Color::get(Color::BLACK)],
+            [Color::BLACK],
             [null],
         ];
     }
@@ -82,12 +82,8 @@ class EnumTypeTest extends TestCase
 
     protected function tearDown(): void
     {
-        parent::tearDown();
-
         $this->databaseManager->dropSchema();
-    }
-}
 
-if (getenv(Environment::RUNNER) !== false) {
-    (new EnumTypeTest())->run();
+        parent::tearDown();
+    }
 }

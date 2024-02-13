@@ -4,12 +4,14 @@ namespace BrandEmbassy\Doctrine\EnumType;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Tools\SchemaTool;
 use function array_map;
 
 /**
  * @final
+ * @template T of object
  */
 class DatabaseManager
 {
@@ -20,11 +22,15 @@ class DatabaseManager
      */
     private array $entities;
 
+    /**
+     * @var EnumTypesManager<T>
+     */
     private EnumTypesManager $enumTypesManager;
 
 
     /**
      * @param string[] $entities
+     * @param EnumTypesManager<T> $enumTypesManager
      */
     public function __construct(EntityManager $entityManager, array $entities, EnumTypesManager $enumTypesManager)
     {
@@ -34,10 +40,7 @@ class DatabaseManager
     }
 
 
-    /**
-     * @param object $entity
-     */
-    public function persist($entity): void
+    public function persist(object $entity): void
     {
         $this->entityManager->persist($entity);
     }
@@ -49,6 +52,13 @@ class DatabaseManager
     }
 
 
+    /**
+     * @param class-string<T> $entityName
+     *
+     * @return EntityRepository<T>
+     *
+     * @throws NotSupported
+     */
     public function getRepository(string $entityName): EntityRepository
     {
         return $this->entityManager->getRepository($entityName);
@@ -72,7 +82,7 @@ class DatabaseManager
 
 
     /**
-     * @return ClassMetadata[]
+     * @return ClassMetadata<object>[]
      */
     private function getEntitiesMetadata(): array
     {
