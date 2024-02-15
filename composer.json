@@ -15,7 +15,7 @@
     }
   },
   "require": {
-    "php": "^7.4 || >=8.1",
+    "php": ">=8.1",
     "doctrine/orm": "^2.14.3"
   },
   "require-dev": {
@@ -24,22 +24,24 @@
     "marc-mabe/php-enum": "^3.2 || ^4.4",
     "myclabs/php-enum": "^1.6",
     "nette/neon": "^2.4",
-    "nette/tester": "2.4.3",
-    "brandembassy/coding-standard": "10.0.0-beta",
+    "brandembassy/coding-standard": "^11.2",
     "symfony/cache": "^5.4 || ^6.2",
-    "doctrine/annotations": "^2.0"
+    "doctrine/annotations": "^2.0",
+    "phpunit/phpunit": "^10.5"
   },
   "suggest": {
     "marc-mabe/php-enum": "For marc-mabe/php-enum enums support",
     "myclabs/php-enum": "For myclabs/php-enum enums support"
   },
   "scripts": {
-    "test": "vendor/bin/tester -c tests/php.ini -j 1 tests",
     "check-cs": "vendor/bin/ecs check --ansi",
     "fix-cs": "vendor/bin/ecs check --fix --ansi",
     "phpstan": "php -dxdebug.mode=off vendor/bin/phpstan analyse --memory-limit=-1",
     "phpstan-generate-baseline": "php -dxdebug.mode=off vendor/bin/phpstan analyse --memory-limit=-1 --generate-baseline",
-    "phpunit-cc": "./vendor/bin/phpunit tests"
+    "phpunit": "./vendor/bin/phpunit --no-coverage",
+    "phpunit-cc": "php -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-clover=coverage.xml --log-junit=test-report.xml",
+    "check-rector": "vendor/bin/rector process --dry-run --ansi",
+    "fix-rector": "vendor/bin/rector process --ansi"
   },
   "config": {
     "allow-plugins": {

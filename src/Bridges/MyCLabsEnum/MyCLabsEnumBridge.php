@@ -3,26 +3,39 @@
 namespace BrandEmbassy\Doctrine\EnumType\Bridges\MyCLabsEnum;
 
 use BrandEmbassy\Doctrine\EnumType\EnumImplementation;
+use InvalidArgumentException;
 use MyCLabs\Enum\Enum;
 use function assert;
 use function is_array;
 use function is_subclass_of;
+use function sprintf;
 
 /**
  * @final
+ * @implements EnumImplementation<Enum<bool|float|int|string>>
  */
 class MyCLabsEnumBridge implements EnumImplementation
 {
-    public function getBaseEnumClassName(): string
+    public function isClassSupported(string $className): bool
     {
-        return Enum::class;
+        return is_subclass_of($className, Enum::class);
     }
 
 
-    /**
-     * @return mixed enum
-     */
-    public function convertDatabaseValueToEnum(string $enumClassName, string $databaseValue)
+    public function assertClassIsSupported(string $className): void
+    {
+        if (!$this->isClassSupported($className)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    "Enum type class must be subclass of base enum class '%s'",
+                    Enum::class,
+                ),
+            );
+        }
+    }
+
+
+    public function convertDatabaseValueToEnum(string $enumClassName, bool|float|int|string|null $databaseValue): Enum
     {
         assert(is_subclass_of($enumClassName, Enum::class));
 
@@ -30,10 +43,7 @@ class MyCLabsEnumBridge implements EnumImplementation
     }
 
 
-    /**
-     * @param mixed $enum
-     */
-    public function convertEnumToDatabaseValue($enum): string
+    public function convertEnumToDatabaseValue(mixed $enum): string
     {
         assert($enum instanceof Enum);
 

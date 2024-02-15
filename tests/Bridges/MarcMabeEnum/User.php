@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace BrandEmbassy\Doctrine\EnumType;
+namespace BrandEmbassy\Doctrine\EnumType\Bridges\MarcMabeEnum;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,29 +17,23 @@ class User
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      */
-    private int $id;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private string $name;
-
-    /**
-     * @ORM\Column(type="enumGender")
-     */
-    private Gender $gender;
-
-    /**
-     * @ORM\Column(type="enumIndex", nullable=true)
-     */
-    private ?Index $numericalIndex;
+    private readonly int $id;
 
 
-    public function __construct(string $name, Gender $gender, ?Index $numericalIndex = null)
-    {
-        $this->name = $name;
-        $this->gender = $gender;
-        $this->numericalIndex = $numericalIndex;
+    public function __construct(
+        /**
+         * @ORM\Column(type="string")
+         */
+        private string $name,
+        /**
+         * @ORM\Column(type="enumGender")
+         */
+        private Gender $gender,
+        /**
+         * @ORM\Column(type="enumIndex", nullable=true)
+         */
+        private ?Index $numericalIndex = null
+    ) {
     }
 
 

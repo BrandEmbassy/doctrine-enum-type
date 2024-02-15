@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace BrandEmbassy\Doctrine\EnumType;
+namespace BrandEmbassy\Doctrine\EnumType\Bridges\MarcMabeEnum;
 
 use MabeEnum\Enum;
 

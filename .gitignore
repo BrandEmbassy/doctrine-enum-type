@@ -1,4 +1,7 @@
-vendor
-temp
+/vendor/
+/var/*
+!.gitkeep
 composer.lock
 tests/config.neon
+coverage.xml
+test-report.xml

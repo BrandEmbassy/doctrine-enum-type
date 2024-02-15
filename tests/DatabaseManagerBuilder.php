@@ -3,6 +3,7 @@
 namespace BrandEmbassy\Doctrine\EnumType;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Tools\Setup;
 use Nette\Neon\Neon;
 use RuntimeException;
@@ -11,6 +12,7 @@ use function file_get_contents;
 
 /**
  * @final
+ * @template T of object
  */
 class DatabaseManagerBuilder
 {
@@ -21,9 +23,15 @@ class DatabaseManagerBuilder
      */
     private array $entities;
 
+    /**
+     * @var EnumTypesManager<T>
+     */
     private EnumTypesManager $enumTypesManager;
 
 
+    /**
+     * @param EnumImplementation<T> $enumImplementation
+     */
     public function __construct(EnumImplementation $enumImplementation)
     {
         $this->enumTypesManager = new EnumTypesManager($enumImplementation);
@@ -36,12 +44,20 @@ class DatabaseManagerBuilder
     }
 
 
+    /**
+     * @param class-string<object> $className
+     */
     public function addEnumTypeDefinition(string $name, string $className): void
     {
         $this->enumTypesManager->addEnumTypeDefinition($name, $className);
     }
 
 
+    /**
+     * @return DatabaseManager<T>
+     *
+     * @throws ORMException
+     */
     public function build(): DatabaseManager
     {
         $config = Setup::createAnnotationMetadataConfiguration([__DIR__], true, null, null, false);
